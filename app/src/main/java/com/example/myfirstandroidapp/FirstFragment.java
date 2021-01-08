@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class FirstFragment extends Fragment {
@@ -28,25 +29,27 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.findViewById(R.id.random_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentCount = Integer.parseInt(showCountTextView.getText().toString());
+                FirstFragmentDirections.ActionFirstFragmentToSecondFragment action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(currentCount);
+                NavHostFragment.findNavController(FirstFragment.this).navigate(action);
+            }
+        });
+
         view.findViewById(R.id.toast_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast myToast = Toast.makeText(getActivity(), R.string.welcome, Toast.LENGTH_SHORT);
+                Toast myToast = Toast.makeText(getActivity(), "Welcome User!", Toast.LENGTH_SHORT);
                 myToast.show();
             }
         });
 
-        view.findViewById(R.id.count_button).setOnClickListener( new View.OnClickListener() {
+        view.findViewById(R.id.count_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 countMe(view);
-            }
-        });
-
-        view.findViewById(R.id.random_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                randomNumber(view);
             }
         });
     }
